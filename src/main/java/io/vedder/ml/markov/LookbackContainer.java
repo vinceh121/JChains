@@ -1,6 +1,5 @@
 package io.vedder.ml.markov;
 
-import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.LinkedList;
 import java.util.List;
@@ -18,7 +17,7 @@ public class LookbackContainer {
 
 	public LookbackContainer(int maxSize, List<Token> ts) {
 		MAX_SIZE = maxSize;
-		tokenList = new ArrayList<Token>(ts);
+		tokenList = new LinkedList<Token>(ts);
 	}
 
 	/**
