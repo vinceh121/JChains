@@ -14,7 +14,7 @@ import io.vedder.ml.markov.tokens.Token;
 
 /**
  * HashMap based implementation of {@link TokenHolder}.
- * 
+ *
  * @author kyle
  *
  * @param <T>
@@ -24,15 +24,15 @@ public class MapTokenHolder implements TokenHolder {
 	private Map<LookbackContainer, Map<Token, Integer>> tokenMap;
 	private Random r = null;
 
-	public MapTokenHolder(int mapInitialSize) {
-		r = new Random();
-		tokenMap = new ConcurrentHashMap<LookbackContainer, Map<Token, Integer>>(mapInitialSize);
+	public MapTokenHolder(final int mapInitialSize) {
+		this.r = new Random();
+		this.tokenMap = new ConcurrentHashMap<LookbackContainer, Map<Token, Integer>>(mapInitialSize);
 	}
 
-	public void addToken(LookbackContainer lbc, Token next) {
+	public void addToken(final LookbackContainer lbc, final Token next) {
 		Map<Token, Integer> nextElementMap = null;
-		if (tokenMap.containsKey(lbc)) {
-			nextElementMap = tokenMap.get(lbc);
+		if (this.tokenMap.containsKey(lbc)) {
+			nextElementMap = this.tokenMap.get(lbc);
 		} else {
 			nextElementMap = new HashMap<Token, Integer>();
 		}
@@ -43,7 +43,7 @@ public class MapTokenHolder implements TokenHolder {
 		} else {
 			nextElementMap.put(next, 1);
 		}
-		tokenMap.put(lbc, nextElementMap);
+		this.tokenMap.put(lbc, nextElementMap);
 	}
 
 	public Token getNext(LookbackContainer look) {
@@ -51,7 +51,7 @@ public class MapTokenHolder implements TokenHolder {
 
 		// Look for the largest lookback container which has a match. May be
 		// empty.
-		while (!look.isEmpty() && (nextElementList = tokenMap.get(look)) == null) {
+		while (!look.isEmpty() && (nextElementList = this.tokenMap.get(look)) == null) {
 			look = look.shrinkContainer();
 		}
 
@@ -61,12 +61,12 @@ public class MapTokenHolder implements TokenHolder {
 
 		int sum = 0;
 		// calculate sum
-		for (Entry<Token, Integer> entry : nextElementList.entrySet()) {
+		for (final Entry<Token, Integer> entry : nextElementList.entrySet()) {
 			sum += entry.getValue();
 		}
 
-		int randInt = r.nextInt(sum) + 1;
-		for (Entry<Token, Integer> entry : nextElementList.entrySet()) {
+		int randInt = this.r.nextInt(sum) + 1;
+		for (final Entry<Token, Integer> entry : nextElementList.entrySet()) {
 			if (randInt <= entry.getValue()) {
 				return entry.getKey();
 			}
@@ -78,18 +78,18 @@ public class MapTokenHolder implements TokenHolder {
 
 	@Override
 	public String toString() {
-		StringBuffer sb = new StringBuffer();
-		List<String> lst = new LinkedList<String>();
-		for (Entry<LookbackContainer, Map<Token, Integer>> e : tokenMap.entrySet()) {
+		final StringBuffer sb = new StringBuffer();
+		final List<String> lst = new LinkedList<String>();
+		for (final Entry<LookbackContainer, Map<Token, Integer>> e : this.tokenMap.entrySet()) {
 			lst.add(e.toString() + "\n");
 
 		}
 		Collections.sort(lst);
 
-		for(String l : lst) {
+		for (final String l : lst) {
 			sb.append(l);
 		}
-		
+
 		return sb.toString();
 	}
 

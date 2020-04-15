@@ -10,25 +10,25 @@ import java.util.LinkedList;
 import java.util.List;
 
 public class Utils {
-	public static void writeToFile(String filePath, String contents) {
+	public static void writeToFile(final String filePath, final String contents) {
 		try {
-			File file = new File(filePath);
+			final File file = new File(filePath);
 
 			if (!file.exists()) {
 				file.createNewFile();
 			}
-			FileWriter fw = new FileWriter(file.getAbsoluteFile());
-			BufferedWriter bw = new BufferedWriter(fw);
+			final FileWriter fw = new FileWriter(file.getAbsoluteFile());
+			final BufferedWriter bw = new BufferedWriter(fw);
 			bw.write(contents);
 			bw.close();
 
-		} catch (IOException e) {
+		} catch (final IOException e) {
 			e.printStackTrace();
 		}
 	}
 
-	public static List<String> readFile(String filePath) {
-		List<String> lines = new LinkedList<String>();
+	public static List<String> readFile(final String filePath) {
+		final List<String> lines = new LinkedList<String>();
 		BufferedReader br = null;
 		try {
 			br = new BufferedReader(new FileReader(new File(filePath)));
@@ -36,13 +36,13 @@ public class Utils {
 			while ((line = br.readLine()) != null) {
 				lines.add(line + "\n");
 			}
-		} catch (IOException e) {
+		} catch (final IOException e) {
 			e.printStackTrace();
 		} finally {
 			if (br != null) {
 				try {
 					br.close();
-				} catch (IOException e) {
+				} catch (final IOException e) {
 					e.printStackTrace();
 				}
 			}

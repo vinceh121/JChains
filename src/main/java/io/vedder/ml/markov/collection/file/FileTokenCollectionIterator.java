@@ -16,26 +16,26 @@ public class FileTokenCollectionIterator implements Iterator<Token> {
 
 	private final LookbackContainer c;
 
-	public FileTokenCollectionIterator(TokenHolder th, int lookBack) {
+	public FileTokenCollectionIterator(final TokenHolder th, final int lookBack) {
 		super();
 		this.th = th;
-		c = new LookbackContainer(lookBack, DELIMIT_TOKEN);
-		this.currentToken = nextToken();
+		this.c = new LookbackContainer(lookBack, this.DELIMIT_TOKEN);
+		this.currentToken = this.nextToken();
 	}
 
 	private Token nextToken() {
-		Token t = th.getNext(c);
-		c.addToken(t);
+		final Token t = this.th.getNext(this.c);
+		this.c.addToken(t);
 		return t;
 	}
 
 	public boolean hasNext() {
-		return (currentToken != null && currentToken != DELIMIT_TOKEN);
+		return this.currentToken != null && this.currentToken != this.DELIMIT_TOKEN;
 	}
 
 	public Token next() {
-		Token t = currentToken;
-		currentToken = nextToken();
+		final Token t = this.currentToken;
+		this.currentToken = this.nextToken();
 		return t;
 	}
 

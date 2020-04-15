@@ -10,13 +10,13 @@ public class FileTokenCollection extends TokenCollection {
 
 	private final int LOOKBACK;
 
-	public FileTokenCollection(TokenHolder th, int lookBack) {
+	public FileTokenCollection(final TokenHolder th, final int lookBack) {
 		super(th);
 		this.LOOKBACK = lookBack;
 	}
 
 	public Iterator<Token> iterator() {
-		return new FileTokenCollectionIterator(th, LOOKBACK);
+		return new FileTokenCollectionIterator(this.th, this.LOOKBACK);
 	}
 
 }

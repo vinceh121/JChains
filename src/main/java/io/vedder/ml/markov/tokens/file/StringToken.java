@@ -4,7 +4,7 @@ import io.vedder.ml.markov.tokens.Token;
 
 /**
  * Token for representing a single word.
- * 
+ *
  * @author kyle
  *
  */
@@ -12,7 +12,7 @@ public class StringToken extends Token {
 
 	private final String data;
 
-	public StringToken(String data) {
+	public StringToken(final String data) {
 		this.data = data;
 	}
 
@@ -20,24 +20,29 @@ public class StringToken extends Token {
 	public int hashCode() {
 		final int prime = 31;
 		int result = 1;
-		result = prime * result + ((data == null) ? 0 : data.hashCode());
+		result = prime * result + (this.data == null ? 0 : this.data.hashCode());
 		return result;
 	}
 
 	@Override
-	public boolean equals(Object obj) {
-		if (this == obj)
+	public boolean equals(final Object obj) {
+		if (this == obj) {
 			return true;
-		if (obj == null)
+		}
+		if (obj == null) {
 			return false;
-		if (getClass() != obj.getClass())
+		}
+		if (this.getClass() != obj.getClass()) {
 			return false;
-		StringToken other = (StringToken) obj;
-		if (data == null) {
-			if (other.data != null)
+		}
+		final StringToken other = (StringToken) obj;
+		if (this.data == null) {
+			if (other.data != null) {
 				return false;
-		} else if (!data.equals(other.data))
+			}
+		} else if (!this.data.equals(other.data)) {
 			return false;
+		}
 		return true;
 	}
 

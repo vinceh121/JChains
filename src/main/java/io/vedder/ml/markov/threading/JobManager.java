@@ -14,33 +14,33 @@ public class JobManager {
 	private List<Runnable> jobs = null;
 
 	public JobManager() {
-		jobs = new LinkedList<Runnable>();
+		this.jobs = new LinkedList<Runnable>();
 	}
 
-	public void addTokenizer(Tokenizer t) {
+	public void addTokenizer(final Tokenizer t) {
 		this.addJob(new TokenizerJob(t));
 	}
 
-	public void addJob(Runnable t) {
-		jobs.add(t);
+	public void addJob(final Runnable t) {
+		this.jobs.add(t);
 	}
 
 	public void runAll() {
-		List<Thread> threads = new LinkedList<Thread>();
-		for (Runnable r : jobs) {
-			Thread th = new Thread(r);
+		final List<Thread> threads = new LinkedList<Thread>();
+		for (final Runnable r : this.jobs) {
+			final Thread th = new Thread(r);
 			threads.add(th);
 			th.start();
 		}
 
 		try {
-			log.info("Awating all job completions...\n");
-			for (Thread th : threads) {
+			JobManager.log.info("Awating all job completions...\n");
+			for (final Thread th : threads) {
 				th.join();
 			}
-		} catch (InterruptedException e) {
+		} catch (final InterruptedException e) {
 			e.printStackTrace();
 		}
-		log.info("All jobs complete!\n");
+		JobManager.log.info("All jobs complete!\n");
 	}
 }

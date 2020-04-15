@@ -9,7 +9,7 @@ public abstract class TokenCollection implements Collection<Token> {
 
 	protected TokenHolder th;
 
-	public TokenCollection(TokenHolder th) {
+	public TokenCollection(final TokenHolder th) {
 		this.th = th;
 	}
 
@@ -21,7 +21,7 @@ public abstract class TokenCollection implements Collection<Token> {
 		throw new RuntimeException("Cannot call this method on a lazy TokenCollection");
 	}
 
-	public boolean contains(Object o) {
+	public boolean contains(final Object o) {
 		throw new RuntimeException("Cannot call this method on a lazy TokenCollection");
 	}
 
@@ -29,31 +29,31 @@ public abstract class TokenCollection implements Collection<Token> {
 		throw new RuntimeException("Cannot call this method on a lazy TokenCollection");
 	}
 
-	public <T> T[] toArray(T[] a) {
+	public <T> T[] toArray(final T[] a) {
 		throw new RuntimeException("Cannot call this method on a lazy TokenCollection");
 	}
 
-	public boolean add(Token e) {
+	public boolean add(final Token e) {
 		throw new RuntimeException("Cannot call this method on a lazy TokenCollection");
 	}
 
-	public boolean remove(Object o) {
+	public boolean remove(final Object o) {
 		throw new RuntimeException("Cannot call this method on a lazy TokenCollection");
 	}
 
-	public boolean containsAll(Collection<?> c) {
+	public boolean containsAll(final Collection<?> c) {
 		throw new RuntimeException("Cannot call this method on a lazy TokenCollection");
 	}
 
-	public boolean addAll(Collection<? extends Token> c) {
+	public boolean addAll(final Collection<? extends Token> c) {
 		throw new RuntimeException("Cannot call this method on a lazy TokenCollection");
 	}
 
-	public boolean removeAll(Collection<?> c) {
+	public boolean removeAll(final Collection<?> c) {
 		throw new RuntimeException("Cannot call this method on a lazy TokenCollection");
 	}
 
-	public boolean retainAll(Collection<?> c) {
+	public boolean retainAll(final Collection<?> c) {
 		throw new RuntimeException("Cannot call this method on a lazy TokenCollection");
 	}
 

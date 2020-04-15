@@ -16,18 +16,18 @@ public class FileGenerator extends Generator {
 	private final int LOOKBACK;
 	private final Token DELIMIT_TOKEN = DelimitToken.getInstance();
 
-	public FileGenerator(TokenHolder th, int lookback) {
+	public FileGenerator(final TokenHolder th, final int lookback) {
 		super(th);
 		this.LOOKBACK = lookback;
 	}
 
 	@Override
 	public List<Token> generateTokenList() {
-		List<Token> line = new LinkedList<Token>();
+		final List<Token> line = new LinkedList<Token>();
 
-		LookbackContainer c = new LookbackContainer(LOOKBACK, DELIMIT_TOKEN);
+		final LookbackContainer c = new LookbackContainer(this.LOOKBACK, this.DELIMIT_TOKEN);
 		Token t = null;
-		while ((t = th.getNext(c)) != DELIMIT_TOKEN && t != null) {
+		while ((t = this.th.getNext(c)) != this.DELIMIT_TOKEN && t != null) {
 			line.add(t);
 			c.addToken(t);
 		}
@@ -36,7 +36,7 @@ public class FileGenerator extends Generator {
 
 	@Override
 	public TokenCollection generateLazyTokenList() {
-		return new FileTokenCollection(th, LOOKBACK);
+		return new FileTokenCollection(this.th, this.LOOKBACK);
 	}
 
 }

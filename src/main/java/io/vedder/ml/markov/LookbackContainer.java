@@ -11,30 +11,31 @@ public class LookbackContainer {
 
 	private final int MAX_SIZE;
 
-	public LookbackContainer(int maxSize, Token ts) {
+	public LookbackContainer(final int maxSize, final Token ts) {
 		this(maxSize, Arrays.asList(ts));
 	}
 
-	public LookbackContainer(int maxSize, List<Token> ts) {
-		MAX_SIZE = maxSize;
-		tokenList = new LinkedList<Token>(ts);
+	public LookbackContainer(final int maxSize, final List<Token> ts) {
+		this.MAX_SIZE = maxSize;
+		this.tokenList = new LinkedList<Token>(ts);
 	}
 
 	/**
 	 * Adds a token while ensuring that the maximum size property is maintained.
-	 * 
+	 *
 	 * @param token
 	 * @param maxSize
 	 */
-	public void addToken(Token token) {
-		if (tokenList == null) {
-			tokenList = new LinkedList<Token>();
+	public void addToken(final Token token) {
+		if (this.tokenList == null) {
+			this.tokenList = new LinkedList<Token>();
 		}
 
-		while (tokenList.size() > MAX_SIZE)
-			tokenList.removeFirst();
+		while (this.tokenList.size() > this.MAX_SIZE) {
+			this.tokenList.removeFirst();
+		}
 
-		tokenList.add(token);
+		this.tokenList.add(token);
 	}
 
 	/**
@@ -47,41 +48,46 @@ public class LookbackContainer {
 	}
 
 	public LookbackContainer shrinkContainer() {
-		List<Token> lst = new LinkedList<Token>(tokenList);
+		final List<Token> lst = new LinkedList<Token>(this.tokenList);
 		if (!lst.isEmpty()) {
 			lst.remove(0);
 		}
-		return new LookbackContainer(MAX_SIZE - 1, lst);
+		return new LookbackContainer(this.MAX_SIZE - 1, lst);
 	}
 
 	@Override
 	public int hashCode() {
 		final int prime = 31;
 		int result = 1;
-		result = prime * result + ((tokenList == null) ? 0 : tokenList.hashCode());
+		result = prime * result + (this.tokenList == null ? 0 : this.tokenList.hashCode());
 		return result;
 	}
 
 	@Override
-	public boolean equals(Object obj) {
-		if (this == obj)
+	public boolean equals(final Object obj) {
+		if (this == obj) {
 			return true;
-		if (obj == null)
+		}
+		if (obj == null) {
 			return false;
-		if (getClass() != obj.getClass())
+		}
+		if (this.getClass() != obj.getClass()) {
 			return false;
-		LookbackContainer other = (LookbackContainer) obj;
-		if (tokenList == null) {
-			if (other.tokenList != null)
+		}
+		final LookbackContainer other = (LookbackContainer) obj;
+		if (this.tokenList == null) {
+			if (other.tokenList != null) {
 				return false;
-		} else if (!tokenList.equals(other.tokenList))
+			}
+		} else if (!this.tokenList.equals(other.tokenList)) {
 			return false;
+		}
 		return true;
 	}
 
 	@Override
 	public String toString() {
-		return "LookbackContainer [tokenList=" + tokenList + "]";
+		return "LookbackContainer [tokenList=" + this.tokenList + "]";
 	}
 
 }

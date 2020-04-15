@@ -9,7 +9,7 @@ import io.vedder.ml.markov.tokens.Token;
 public abstract class Generator {
 	protected TokenHolder th;
 
-	public Generator(TokenHolder th) {
+	public Generator(final TokenHolder th) {
 		this.th = th;
 	}
 

@@ -35,52 +35,53 @@ public class ExampleMain {
 	 */
 	public static void main(String[] args) {
 		if (args.length == 0) {
-			args = new String[] {"-v", "-i", "50000", "3", "10", "-f", "inputs/shakespear.txt", "inputs/AllsWellThatEndsWell.txt"};
+			args = new String[] { "-v", "-i", "50000", "3", "10", "-f", "inputs/shakespear.txt",
+					"inputs/AllsWellThatEndsWell.txt" };
 		}
 
-		parseArgs(Arrays.asList(args));
+		ExampleMain.parseArgs(Arrays.asList(args));
 
-		if (!verbose) {
-			log.setLevel(Level.WARN);
+		if (!ExampleMain.verbose) {
+			ExampleMain.log.setLevel(Level.WARN);
 		}
 
 		// Data structure to hold tokens
-		TokenHolder tokenHolder = new MapTokenHolder(mapInitialSize);
-		
-		JobManager jm = new JobManager();
+		final TokenHolder tokenHolder = new MapTokenHolder(ExampleMain.mapInitialSize);
+
+		final JobManager jm = new JobManager();
 
 		// Fills the TokenHolder with tokens
-		for (String filePath : filePaths) {
-			FileTokenizer fileTokenizer = new FileTokenizer(tokenHolder, lookback, filePath);
+		for (final String filePath : ExampleMain.filePaths) {
+			final FileTokenizer fileTokenizer = new FileTokenizer(tokenHolder, ExampleMain.lookback, filePath);
 			jm.addTokenizer(fileTokenizer);
 		}
-		
+
 		jm.runAll();
 
 		// Uses the TokenHolder to generate Collections of tokens.
-		Generator g = new FileGenerator(tokenHolder, lookback);
+		final Generator g = new FileGenerator(tokenHolder, ExampleMain.lookback);
 
 		// Takes Collections of tokens and consumes them
-		TokenConsumer tc = new FileTokenConsumer();
+		final TokenConsumer tc = new FileTokenConsumer();
 
 		// Kicks off the tokenization process
 
-		List<Collection<Token>> tokensCollections = new LinkedList<Collection<Token>>();
+		final List<Collection<Token>> tokensCollections = new LinkedList<Collection<Token>>();
 
 		// Creates Lists of tokens
-		for (int i = 0; i < numSent / 2; i++) {
+		for (int i = 0; i < ExampleMain.numSent / 2; i++) {
 			tokensCollections.add(g.generateTokenList());
 		}
 
 		// Creates lazy collections of tokens
-		for (int i = 0; i < (numSent / 2 + numSent % 2); i++) {
+		for (int i = 0; i < ExampleMain.numSent / 2 + ExampleMain.numSent % 2; i++) {
 			tokensCollections.add(g.generateLazyTokenList());
 		}
 
 		// Consumer consumes both types of collections
-		log.info("Printing Tokens...\n" + "===============\n");
-		
-		for(Collection<Token> l: tokensCollections) {
+		ExampleMain.log.info("Printing Tokens...\n" + "===============\n");
+
+		for (final Collection<Token> l : tokensCollections) {
 			tc.consume(l);
 		}
 
@@ -88,36 +89,36 @@ public class ExampleMain {
 
 	/**
 	 * Parses CL args and configures the application for launch.
-	 * 
+	 *
 	 * @param args
 	 */
-	private static void parseArgs(List<String> args) {
+	private static void parseArgs(final List<String> args) {
 		if (args.size() < 3 || !args.contains("-f")) {
-			printUsageAndExit();
+			ExampleMain.printUsageAndExit();
 		}
-		
-		for(String a : args) {
+
+		for (String a : args) {
 			a = a.trim();
 		}
 
 		if (args.contains("-v")) {
-			verbose = true;
+			ExampleMain.verbose = true;
 		}
 
 		if (args.contains("-i")) {
-			int index = args.indexOf("-i");
-			mapInitialSize = Integer.parseInt(args.get(index + 1));
+			final int index = args.indexOf("-i");
+			ExampleMain.mapInitialSize = Integer.parseInt(args.get(index + 1));
 		}
 
-		int dashFIndex = args.indexOf("-f");
+		final int dashFIndex = args.indexOf("-f");
 
-		String lookbackString = args.get(dashFIndex - 2);
-		String numSentString = args.get(dashFIndex - 1);
-		List<String> filePathStrings = args.subList(dashFIndex+1, args.size());
+		final String lookbackString = args.get(dashFIndex - 2);
+		final String numSentString = args.get(dashFIndex - 1);
+		final List<String> filePathStrings = args.subList(dashFIndex + 1, args.size());
 
-		lookback = Integer.parseInt(lookbackString);
-		numSent = Integer.parseInt(numSentString);
-		filePaths = filePathStrings;
+		ExampleMain.lookback = Integer.parseInt(lookbackString);
+		ExampleMain.numSent = Integer.parseInt(numSentString);
+		ExampleMain.filePaths = filePathStrings;
 	}
 
 	private static void printUsageAndExit() {

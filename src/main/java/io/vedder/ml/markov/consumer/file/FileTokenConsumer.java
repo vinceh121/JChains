@@ -10,9 +10,9 @@ import io.vedder.ml.markov.tokens.Token;
 public class FileTokenConsumer extends TokenConsumer {
 
 	@Override
-	public void consume(Collection<Token> collection) {
-		List<String> punctuation = Arrays.asList(",", ";", ":", ".", "?", "!", "-");
-		for(Token w : collection) {
+	public void consume(final Collection<Token> collection) {
+		final List<String> punctuation = Arrays.asList(",", ";", ":", ".", "?", "!", "-");
+		for (final Token w : collection) {
 			if (!punctuation.contains(w.toString())) {
 				System.out.print(" ");
 			}

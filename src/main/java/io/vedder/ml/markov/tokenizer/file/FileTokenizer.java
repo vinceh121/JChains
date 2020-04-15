@@ -19,7 +19,7 @@ import io.vedder.ml.markov.utils.Utils;
 
 /**
  * Implementation of the {@link Tokenizer} for text files.
- * 
+ *
  * @author kyle
  *
  */
@@ -34,30 +34,30 @@ public class FileTokenizer extends Tokenizer {
 
 	private List<String> listStrings = null;
 
-	public FileTokenizer(TokenHolder th, int lookback, String filePath) {
+	public FileTokenizer(final TokenHolder th, final int lookback, final String filePath) {
 		super(th);
-		END_MARKS = new HashSet<String>(Arrays.asList(".", "?", "!"));
-		LOOKBACK = lookback;
+		this.END_MARKS = new HashSet<String>(Arrays.asList(".", "?", "!"));
+		this.LOOKBACK = lookback;
 		this.filePath = filePath;
 	}
 
 	@Override
 	public void tokenize() {
-		this.listStrings = splitStrings(Utils.readFile(filePath));
-		addTokensToHolder();
+		this.listStrings = this.splitStrings(Utils.readFile(this.filePath));
+		this.addTokensToHolder();
 	}
 
 	private void addTokensToHolder() {
-		List<Token> l = getTokens(this.listStrings);
-		addTokenList(l);
+		final List<Token> l = this.getTokens(this.listStrings);
+		this.addTokenList(l);
 	}
 
-	private void addTokenList(List<Token> tokens) {
-		log.info("Chunking " + tokens.size() + " tokens for file \""+ filePath +"\"...\n");
-		for (int wordIndex = LOOKBACK; wordIndex < tokens.size() - 1; wordIndex++) {
+	private void addTokenList(final List<Token> tokens) {
+		FileTokenizer.log.info("Chunking " + tokens.size() + " tokens for file \"" + this.filePath + "\"...\n");
+		for (int wordIndex = this.LOOKBACK; wordIndex < tokens.size() - 1; wordIndex++) {
 
 			// List for the lookback
-			List<Token> lookBackList = new ArrayList<Token>(this.LOOKBACK);
+			final List<Token> lookBackList = new ArrayList<Token>(this.LOOKBACK);
 
 			Token t = null;
 
@@ -68,43 +68,43 @@ public class FileTokenizer extends Tokenizer {
 				lookBackList.add(0, t);
 
 				// constructor call is to copy lookBackList
-				th.addToken(new LookbackContainer(this.LOOKBACK, lookBackList), tokens.get(wordIndex + 1));
+				this.th.addToken(new LookbackContainer(this.LOOKBACK, lookBackList), tokens.get(wordIndex + 1));
 
 				// if lookback hits delimiter token, stop
-				if (t == DELIMIT_TOKEN) {
+				if (t == this.DELIMIT_TOKEN) {
 					break chunkLoop;
 				}
 			}
 		}
 	}
 
-	private List<Token> getTokens(List<String> listStrings) {
-		List<Token> tokenList = new LinkedList<Token>();
-		tokenList.add(DELIMIT_TOKEN);
-		
-		for(String s : listStrings) {
+	private List<Token> getTokens(final List<String> listStrings) {
+		final List<Token> tokenList = new LinkedList<Token>();
+		tokenList.add(this.DELIMIT_TOKEN);
+
+		for (final String s : listStrings) {
 			tokenList.add(new StringToken(s));
-			if (END_MARKS.contains(s)) {
-				tokenList.add(DELIMIT_TOKEN);
+			if (this.END_MARKS.contains(s)) {
+				tokenList.add(this.DELIMIT_TOKEN);
 			}
 		}
 
 		// check to see if ends with delimiter token
-		if (tokenList.get(tokenList.size() - 1) != DELIMIT_TOKEN) {
-			tokenList.add(DELIMIT_TOKEN);
+		if (tokenList.get(tokenList.size() - 1) != this.DELIMIT_TOKEN) {
+			tokenList.add(this.DELIMIT_TOKEN);
 		}
 		return tokenList;
 	}
 
-	private List<String> splitStrings(List<String> lines) {
+	private List<String> splitStrings(final List<String> lines) {
 		// Regex from:
 		// http://stackoverflow.com/questions/24222730/split-a-string-and-separate-by-punctuation-and-whitespace
-		List<String> splits = new ArrayList<String>();
+		final List<String> splits = new ArrayList<String>();
 		List<String> temp;
-		for (String s : lines) {
+		for (final String s : lines) {
 			temp = Arrays.asList(s.replaceAll("  ", " ")
 					.split("\\s+|(?=\\W\\p{Punct}|\\p{Punct}\\W)|(?<=\\W\\p{Punct}|\\p{Punct}\\W})"));
-			for (String t : temp) {
+			for (final String t : temp) {
 				if (t != "" && !t.isEmpty()) {
 					splits.add(t);
 				}
